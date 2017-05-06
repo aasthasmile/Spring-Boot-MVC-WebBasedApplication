@@ -1,0 +1,26 @@
+Spring MVC  has a model class, view (in jsp), and a service and dao classes for the controller.
+
+DAO is as light as possible and exists solely to provide a connection to the DB, sometimes 
+abstracted so different DB back-ends can be used.The service layer is there to provide logic
+to operate on the data sent to and from the DAO and the client. Very often these 2 pieces
+will be bundled together into the same module, and occasionally into the same code, but
+you'll still see them as distinct logical entities. I can safely say that having different class
+for service layer and dao layer is always a good idea.
+
+ DAO should be limited to only add/update/insert/select Entity objects into/from database and that's all.
+ If you want to do anything extra in terms of logic, add it to service layer. This will help in making
+ code modular and easily replaceable when database is replaced (for some part of data).
+
+In spring ,security is applied at service layer ideally.
+
+/**------------------------------------------------------------------------------------------*/
+/**
+ ALl Spring beans are managed - they "live" inside a container, called "application context".
+ What is "living" in the application context? This means that the context instantiates the objects, 
+ * not you. i.e. - you never make new UserServiceImpl() , the container finds each injection point
+ *  and sets an instance there.
+*/
+Some of the important points about SPRING MVC :
+
+1. The entry point for a Spring-MVC application is the DispatcherServlet, but it is hidden from you, 
+and hence the direct interaction and bootstrapping of the "application context" happens behind the scene.
