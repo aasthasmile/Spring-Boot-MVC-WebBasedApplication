@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import csulb.edu.aasthajain.model.User;
+
 @Service("userService")
 public class UserServiceImpl implements UserServiceLayer {
 

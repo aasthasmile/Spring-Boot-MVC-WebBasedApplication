@@ -2,6 +2,8 @@ package csulb.edu.aasthajain.controller;
 
 import java.util.List;
 
+import csulb.edu.aasthajain.model.User;
+
 public interface UserDAL {
 
 	public List<User> getAllUser();

@@ -12,6 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import csulb.edu.aasthajain.model.User;
+
 import org.springframework.dao.support.DaoSupport;
 
 @Repository
@@ -79,7 +82,7 @@ public class UserRepository implements UserDAL{
 
 	@Override
 	public int deleteUser(String id) {
-		String deleteQuery="DELETE FROM USER where id=?";
+		String deleteQuery="DELETE FROM User where id=?";
 		
 		return jdbcTemplate.update(deleteQuery, new PreparedStatementSetter() {
 			
@@ -94,12 +97,12 @@ public class UserRepository implements UserDAL{
 
 	@Override
 	public void insertBatch() {
-	jdbcTemplate.execute("DROP TABLE USER IF EXISTS");
+	jdbcTemplate.execute("DROP TABLE User IF EXISTS");
 	
-//	jdbcTemplate.execute("CREATE TABLE USER(id integer,first_name varchar(100),last_name varchar(100),"
-//			+ "age varchar(100),gender varchar(100),gpa varchar(100)");
+	jdbcTemplate.execute("CREATE TABLE User(id integer AUTO_INCREMENT,first_name varchar(100),last_name varchar(100),"
+			+ "age varchar(100),gender varchar(100),gpa varchar(100))");
 	
-	jdbcTemplate.batchUpdate("INSERT INTO USER(first_name,last_name,age,gender,gpa) VALUES(?,?,?,?,?)",intitalData());
+	jdbcTemplate.batchUpdate("INSERT INTO User(first_name,last_name,age,gender,gpa) VALUES(?,?,?,?,?)",intitalData());
 		
 	}
 
