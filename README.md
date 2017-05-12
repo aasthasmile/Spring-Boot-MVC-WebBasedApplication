@@ -36,59 +36,59 @@ Spring Framework allows beans to be configured in 3 ways .
 1.XML based configurations  2.Annotations based confogurations  3.JavaConfig   ( I will prefer second option here).
 
 XML based configurations:
-<bean id="userService" class="com.sivalabs.myapp.service.UserService">
-    <property name="userDao" ref="userDao"/>
-</bean>
+	<bean id="userService" class="com.sivalabs.myapp.service.UserService">
+   		<property name="userDao" ref="userDao">
+	 </bean>
 
-<bean id="userDao" class="com.sivalabs.myapp.dao.JdbcUserDao">
-    <property name="dataSource" ref="dataSource"/>
-</bean>
+	<bean id="userDao" class="com.sivalabs.myapp.dao.JdbcUserDao">
+   	 <property name="dataSource" ref="dataSource"/>
+	</bean>
 
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <property name="url" value="jdbc:mysql://localhost:3306/test"/>
-    <property name="username" value="root"/>
-    <property name="password" value="secret"/>
-</bean>
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    			<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    			<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+    			<property name="username" value="root"/>
+    			<property name="password" value="secret"/>
+		</bean>
 
 Annotations based confogurations:
 
-@Service
-public class UserService
-{
-   private UserDao userDao;
+	@Service
+	public class UserService
+	{
+	   private UserDao userDao;
 
-    @Autowired
-    public UserService(UserDao dao){
-        this.userDao = dao;
-    }
- } 
+	    @Autowired
+	    public UserService(UserDao dao){
+	        this.userDao = dao;
+	    }
+	} 
  
- JavaConfig :
+ JavaConfig 
  
-@Configuration
-public class AppConfig
-{
-    @Bean
-    public UserService userService(UserDao dao){
-        return new UserService(dao);
-    }
-    @Bean
-    public UserDao userDao(DataSource dataSource){
-        return new JdbcUserDao(dataSource);
-    }
+		@Configuration
+		public class AppConfig
+			{
+		    @Bean
+		    public UserService userService(UserDao dao){
+			return new UserService(dao);
+		    }
+		    @Bean
+		    public UserDao userDao(DataSource dataSource){
+			return new JdbcUserDao(dataSource);
+		    }
 
-    @Bean
-    public DataSource dataSource(){
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/test");
-        dataSource.setUsername("root");
-        dataSource.setPassword("secret");
-        return dataSource;
-    }
+		    @Bean
+		    public DataSource dataSource(){
+			BasicDataSource dataSource = new BasicDataSource();
+			dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+			dataSource.setUrl("jdbc:mysql://localhost:3306/test");
+			dataSource.setUsername("root");
+			dataSource.setPassword("secret");
+			return dataSource;
+	  	  }
 
-}
+		}
 
 
 STEPS FOR BUILDING SPRING MVC APPLICATION 
@@ -97,11 +97,12 @@ STEP-1
 CONFIGURE MAVEN DEPENDENCIES = > pom.xml
 Add all the dependencies that are required to make a Spring-boot-starter application.
 
-<dependency>
+
+	<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>4.2.4.RELEASE</version>
-</dependency>
+	</dependency>
 
 
 In these dependencies , we will use spring-boot-starter-* dependencies.Springboot-starter-web dependency( by default), it will pull all the commonly used libraries while developing Spring MVC applications such as spring-webmvc, jackson-json, validation-api and tomcat.
@@ -114,15 +115,15 @@ Packaging type in pom.xml is ‘jar’ not ‘war’.
 STEP-2
 CREATE A MODEL CLASS 
 
-@Entity 
-class className{
+	@Entity 
+	class className{
 
-@Id //Primary Key
-@ColumnName(name="ColumnNametobeSpecifiedHere")
-@GeneratedType() //AutoGenerate ineteger id 
-etcs
-private int id;
-}
+	@Id //Primary Key
+	@ColumnName(name="ColumnNametobeSpecifiedHere")
+	@GeneratedType() //AutoGenerate ineteger id 
+	etcs
+	private int id;
+	}
 
 STEP-3 
 CREATE A REPOSITORY CLASS ( IT has all the jdbc-template CREATE ,READ ,UPDATE ,DELETE operations)
@@ -146,20 +147,20 @@ CREATE A SERVICE CLASS
 STEP-5
 CREATE A CONTROLLER CLASS (@RestController @RequestMapping @RequestBody annotations and HTTP Reuest Methods - GET ,POST,PUT,DELETE)
 
-@RequestMapping(value="/",method = RequestMethod.GET)
+	@RequestMapping(value="/",method = RequestMethod.GET)
 	 public void home(HttpServletResponse response) throws IOException { 
                 response.sendRedirect("app/index.html");     }
                 
-@RequestMapping(value = "users", method = RequestMethod.GET, produces =MediaType.APPLICATION_JSON_VALUE)
-                public List<User> getUsersInfo() throws Exception {}
+	@RequestMapping(value = "users", method = RequestMethod.GET, produces =MediaType.APPLICATION_JSON_VALUE)
+         public List<User> getUsersInfo() throws Exception {}
 
-@RequestMapping(value = "/users/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/users/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	        public ResponseObject createUser(@RequestBody User user) throws Exception {}
 
-@RequestMapping(value = "/users/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	        public ResponseObject updateUser(@PathVariable("id") long id, @RequestBody User user) throws Exception {}
 			
-@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseObject deleteUser(@PathVariable("id") long id) throws Exception {}
         
         
